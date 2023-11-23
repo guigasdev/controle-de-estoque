@@ -42,7 +42,7 @@ const SidebarNav = () => {
           >
             <Link href="/balance">
               <Text fontSize="md" fontWeight="medium" color="gray.500">
-                SALDO
+                ESTOQUE
               </Text>
             </Link>
           </ChakraLink>

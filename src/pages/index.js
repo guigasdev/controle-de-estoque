@@ -98,7 +98,7 @@ const Produtos = () => {
             <Input
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Nome do produto"
+              placeholder="Placa/Veículo/Estado/Ano/Cor/Preço"
             />
             <Button w="40" onClick={handleNewProduct}>
               CADASTRAR
@@ -110,7 +110,7 @@ const Produtos = () => {
               <Thead>
                 <Tr>
                   <Th fontWeight="bold" fontSize="14px">
-                    Nome
+                    Veículo
                   </Th>
                   <Th></Th>
                 </Tr>

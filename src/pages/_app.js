@@ -1,6 +1,7 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import { SidebarProvider } from "../contexts/SidebarContext";
 
+
 function MyApp({ Component, pageProps }) {
   return (
     <ChakraProvider>
@@ -10,6 +11,9 @@ function MyApp({ Component, pageProps }) {
     </ChakraProvider>
   );
 }
+
+
+
 
 export default MyApp;
 

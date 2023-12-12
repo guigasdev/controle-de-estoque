@@ -44,10 +44,6 @@ const Header = () => {
       )}
       <Text>Urban Motors</Text>
       <Flex ml="auto">
-        <HStack>
-          <Text>Enzo Gomes</Text>
-          <Avatar size="md" name="Enzo Gomes" />
-        </HStack>
       </Flex>
     </Flex>
   );

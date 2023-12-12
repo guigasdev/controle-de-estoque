@@ -52,6 +52,7 @@ const Balance = () => {
       newArray.push({
         product_id: prod.id,
         product_name: prod.name,
+        procut_image: prod.image,
         amount: total,
       });
 

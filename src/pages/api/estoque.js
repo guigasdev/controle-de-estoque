@@ -1,6 +1,6 @@
-import {StockEntries} from "./stockEntries";
-import {StockOutputs} from "./stockOutputs"
-import {Balance} from "./balance";
+import {StockEntries} from "../stockEntries"
+import {StockOutputs} from "../stockOutputs"
+import {Balance} from "../balance"
 
 const http = require('http');
 const url = require('url');
@@ -21,12 +21,13 @@ const server = http.createServer((req, res) => {
     });
 
     req.on('end', () => {
-      const { produto, quantidade } = JSON.parse(body);
+      const { produto, quantidade, imagem } = JSON.parse(body);
 
       if (produto && quantidade) {
         const new_item = {
           id: estoque.length + 1,
           produto,
+          imagem,
           quantidade
         };
 

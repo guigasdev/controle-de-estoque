@@ -12,6 +12,8 @@ import {
   Th,
   Thead,
   Tr,
+  background,
+  useImage,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import Header from "../components/Header";
@@ -19,6 +21,7 @@ import Sidebar from "../components/Sidebar";
 
 const Produtos = () => {
   const [name, setName] = useState("");
+  const [image, setImage] = useImage({ src: "arquivo" });
   const [listProducts, setListProducts] = useState([]);
 
   useEffect(() => {
@@ -35,20 +38,27 @@ const Produtos = () => {
       alert("Produto já cadastrado!");
       return;
     }
+    const newImage = () => {
+      if (!image) return;
+      if (verifyImageName()) {
+        alert("Imagem já cadastrada");
+        return;
+      }
+    };
 
     const id = Math.random().toString(36).substring(2);
 
     if (listProducts && listProducts.length) {
       localStorage.setItem(
         "db_products",
-        JSON.stringify([...listProducts, { id, name }])
+        JSON.stringify([...listProducts, { id, name, image }])
       );
 
-      setListProducts([...listProducts, { id, name }]);
+      setListProducts([...listProducts, { id, name, image}]);
     } else {
-      localStorage.setItem("db_products", JSON.stringify([{ id, name }]));
+      localStorage.setItem("db_products", JSON.stringify([{ id, name, image}]));
 
-      setListProducts([{ id, name }]);
+      setListProducts([{ id, name, image }]);
     }
 
     setName("");
@@ -100,6 +110,22 @@ const Produtos = () => {
               onChange={(e) => setName(e.target.value)}
               placeholder="Placa/Veículo/Estado/Ano/Cor/Preço"
             />
+
+            <Input display={"none"} name="arquivo" id="arquivo" type="file" />
+            <label
+              style={{
+                ["background-color"]: "#E2E8F0",
+                ["padding"]: "10px 20px",
+                ["width"]: "40%",
+                ["color"]: "#1A202C",
+                ["text-transform"]: "uppercase",
+                ["border-radius"]: "10%",
+                ["font-weight"]: "500",
+              }}
+              for="arquivo"
+            >
+              IMAGEM
+            </label>
             <Button w="40" onClick={handleNewProduct}>
               CADASTRAR
             </Button>

@@ -14,8 +14,9 @@ import {
   Tr,
   background,
   useImage,
+  Image
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 
@@ -23,6 +24,9 @@ const Produtos = () => {
   const [name, setName] = useState("");
   const [image, setImage] = useImage({ src: "arquivo" });
   const [listProducts, setListProducts] = useState([]);
+  const [file, setFile] = useState(null);
+  
+  const inputRef = useRef();
 
   useEffect(() => {
     const db_products = localStorage.getItem("db_products")
@@ -31,6 +35,14 @@ const Produtos = () => {
 
     setListProducts(db_products);
   }, []);
+
+  const handleFileChange = (e) => {
+    if (e.target.files) {
+      //setFile(e.target.files[0]);
+      setFile(URL.createObjectURL(e.target.files[0]))
+    }
+  };
+
 
   const handleNewProduct = () => {
     if (!name) return;
@@ -49,16 +61,17 @@ const Produtos = () => {
     const id = Math.random().toString(36).substring(2);
 
     if (listProducts && listProducts.length) {
+
       localStorage.setItem(
         "db_products",
-        JSON.stringify([...listProducts, { id, name, image }])
+        JSON.stringify([...listProducts, { id, name, file }])
       );
 
-      setListProducts([...listProducts, { id, name, image}]);
+      setListProducts([...listProducts, { id, name, file}]);
     } else {
-      localStorage.setItem("db_products", JSON.stringify([{ id, name, image}]));
+      localStorage.setItem("db_products", JSON.stringify([{ id, name, file}]));
 
-      setListProducts([{ id, name, image }]);
+      setListProducts([{ id, name, file }]);
     }
 
     setName("");
@@ -110,8 +123,9 @@ const Produtos = () => {
               onChange={(e) => setName(e.target.value)}
               placeholder="Placa/Veículo/Estado/Ano/Cor/Preço"
             />
-
-            <Input display={"none"} name="arquivo" id="arquivo" type="file" />
+            <form action="/imagem" method="post" encType="multidata/form-data">
+            <Input ref={inputRef} display={"none"} name="arquivo" id="arquivo" type="file"  onChange={handleFileChange} />
+            </form>
             <label
               style={{
                 ["background-color"]: "#E2E8F0",
@@ -126,6 +140,7 @@ const Produtos = () => {
             >
               IMAGEM
             </label>
+           
             <Button w="40" onClick={handleNewProduct}>
               CADASTRAR
             </Button>
@@ -144,6 +159,8 @@ const Produtos = () => {
               <Tbody>
                 {listProducts.map((item, i) => (
                   <Tr key={i}>
+                    
+                    <Td><Box boxSize='200px'><Image src={item.file}/></Box></Td>
                     <Td color="gray.500">{item.name}</Td>
                     <Td textAlign="end">
                       <Button
